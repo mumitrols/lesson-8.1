@@ -1,74 +1,70 @@
 package ru.netology.radio;
+
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
 
     @Test
-        //Следующая станция после №9
-    void nextStationAfterMaxLimit() {
-        Radio myRadio = new Radio();
-        myRadio.setStation(9);
+        //На пульте выставлена станция с максимальным номером, перейти к следующей станции
+    public void nextStationAfterMaxLimit() {
+        Radio myRadio = new Radio(
+                20
+        );
+        myRadio.setStation(19);
         myRadio.nextStation();
-        int expected = 0;
-        int actual = myRadio.getCurrentStation();
-        assertEquals(expected, actual);
-
+        assertEquals(0, myRadio.getCurrentStation());
     }
 
     @Test
-        // Играет станция №9, нажать дважды кнопку "следующая"
+        // На пульте выставлена станция с мксимальным номером, нажать дважды кнопку "следующая"
     void doubleNextStationAfterMaxLimit() {
         Radio myRadio = new Radio();
         myRadio.setStation(9);
         myRadio.nextStation();
         myRadio.nextStation();
-        int expected = 1;
-        int actual = myRadio.getCurrentStation();
-        assertEquals(expected, actual);
+        assertEquals(1, myRadio.getCurrentStation());
 
     }
 
     @Test
-        // Играет станция №0, нажать кнопку "предыдущая"
+        // ИНа пульте выставлена станция №0, нажать кнопку "предыдущая"
     void prevStationBeforeMinLimit() {
         Radio myRadio = new Radio();
         myRadio.setStation(0);
         myRadio.prevStation();
-        int expected = 9;
-        int actual = myRadio.getCurrentStation();
-        assertEquals(expected, actual);
+        assertEquals(9, myRadio.getCurrentStation());
     }
 
     @Test
-        // Играет станция №0, нажать дважды кнопку "предыдущая"
+        // На пульте выставлена станция №0, нажать дважды кнопку "предыдущая"
     void doublePrevStationBeforeMinLimit() {
-        Radio myRadio = new Radio();
+        Radio myRadio = new Radio(
+                20
+        );
         myRadio.setStation(0);
         myRadio.prevStation();
         myRadio.prevStation();
-        int expected = 8;
-        int actual = myRadio.getCurrentStation();
-        assertEquals(expected, actual);
+        assertEquals(18, myRadio.getCurrentStation());
     }
 
     @Test
         // Задан недопустимый номер станции по верхней границе
     void setStationMoreMaxLimit() {
-        Radio myRadio = new Radio();
-        myRadio.setStation(15);
-        int expected = 0;
-        int actual = myRadio.getCurrentStation();
-        assertEquals(expected, actual);
+        Radio myRadio = new Radio(
+                20
+        );
+        myRadio.setStation(20);
+        assertEquals(0, myRadio.getCurrentStation());
     }
+
     @Test
         // Задан недопустимый номер станции по нижней границе
     void setStationLessMinLimit() {
         Radio myRadio = new Radio();
         myRadio.setStation(-3);
-        int expected = 0;
-        int actual = myRadio.getCurrentStation();
-        assertEquals(expected, actual);
+        assertEquals(0, myRadio.getCurrentStation());
     }
 
     @Test
@@ -78,19 +74,16 @@ class RadioTest {
         myRadio.setStation(0);
         myRadio.increaseVolume();
         myRadio.increaseVolume();
-        int expected = 2;
-        int actual = myRadio.getCurrentVolume();
-        assertEquals(expected, actual);
+        assertEquals(2, myRadio.getCurrentVolume());
     }
+
     @Test
         //Действует максимальная громкость, нажать кнопку "+"
     void increaseVolumeMoreMaxLimit() {
         Radio myRadio = new Radio();
-        myRadio.setVolume(10);
+        myRadio.setVolume(100);
         myRadio.increaseVolume();
-        int expected = 10;
-        int actual = myRadio.getCurrentVolume();
-        assertEquals(expected, actual);
+        assertEquals(100, myRadio.getCurrentVolume());
     }
 
     @Test
@@ -100,26 +93,22 @@ class RadioTest {
         myRadio.setVolume(1);
         myRadio.reduceVolume();
         myRadio.reduceVolume();
-        int expected = 0;
-        int actual = myRadio.getCurrentVolume();
-        assertEquals(expected, actual);
+        assertEquals(0, myRadio.getCurrentVolume());
     }
+
     @Test
         // Задан уровень звука выше предельного
     void setVolumeMoreMaxLimit() {
         Radio myRadio = new Radio();
-        myRadio.setVolume(20);
-        int expected = 0;
-        int actual = myRadio.getCurrentVolume();
-        assertEquals(expected, actual);
+        myRadio.setVolume(200);
+        assertEquals(0, myRadio.getCurrentVolume());
     }
+
     @Test
-        // Задан уровень звука выше предельного
+        // Задан уровень звука ниже предельного
     void setVolumeLessMinLimit() {
         Radio myRadio = new Radio();
         myRadio.setVolume(-20);
-        int expected = 0;
-        int actual = myRadio.getCurrentVolume();
-        assertEquals(expected, actual);
+        assertEquals(0, myRadio.getCurrentVolume());
     }
 }
